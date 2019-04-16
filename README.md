@@ -21,11 +21,13 @@ Cipher: AES/256/CBC/PKCS5Padding with random generated salt
 ### TODO
  + ruby
  + kotlin
- + swift
  + objective-C
  + perl
  + dart
  + scala
  + clojure
  + lisp
+ 
+ + Start supporting PKCS7Padding 
+ + create standalone packages so they can be used on the fly
  
