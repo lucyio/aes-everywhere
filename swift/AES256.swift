@@ -1,6 +1,6 @@
 //
 //  AES256.swift
-//  DecryprionTest
+//  aes-everywhere
 //
 //  Created by Andrew Yaniv on 3/29/19.
 //  Copyright © 2019 Project Core Inc. All rights reserved.
