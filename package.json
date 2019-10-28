@@ -1,6 +1,6 @@
 {
   "name": "aes-everywhere",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "AES Everywhere - Cross Language Encryption (AES 256)",
   "main": "javascript/src/aes256.js",
   "scripts": {
@@ -18,6 +18,9 @@
     "encryption"
   ],
   "license": "MIT",
+  "dependencies": {
+    "node-cryptojs-aes": "^0.4.0"
+  },
   "devDependencies": {
     "babelify": "^7.3.0",
     "browserify": "^13.0.1",
@@ -27,7 +30,6 @@
     "grunt-browserify": "^5.0.0",
     "grunt-cli": "0.1.13",
     "load-grunt-tasks": "1.0.0",
-    "node-cryptojs-aes": "^0.4.0",
     "uglifyify": "^3.0.1"
   }
 }
