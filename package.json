@@ -1,6 +1,6 @@
 {
   "name": "aes-everywhere",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "AES Everywhere - Cross Language Encryption (AES 256)",
   "main": "javascript/src/aes256.js",
   "scripts": {
@@ -18,7 +18,7 @@
     "encryption"
   ],
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "babelify": "^7.3.0",
     "browserify": "^13.0.1",
     "browserify-shim": "^3.8.12",
