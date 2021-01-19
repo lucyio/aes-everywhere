@@ -6,27 +6,27 @@
 package aes256
 
 import (
+	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
-	"crypto/rand"
 	"crypto/md5"
+	"crypto/rand"
 	b64 "encoding/base64"
-	"bytes"
 	"io"
 )
 
 // Encrypts text with the passphrase
-func Encrypt(text string, passphrase string) (string) {
+func Encrypt(text string, passphrase string) (string, error) {
 	salt := make([]byte, 8)
 	if _, err := io.ReadFull(rand.Reader, salt); err != nil {
-		panic(err.Error())
+		return "", err
 	}
 
 	key, iv := __DeriveKeyAndIv(passphrase, string(salt))
 
 	block, err := aes.NewCipher([]byte(key))
 	if err != nil {
-		panic(err)
+		return "", err
 	}
 
 	pad := __PKCS5Padding([]byte(text), block.BlockSize())
@@ -34,14 +34,14 @@ func Encrypt(text string, passphrase string) (string) {
 	encrypted := make([]byte, len(pad))
 	ecb.CryptBlocks(encrypted, pad)
 
-	return b64.StdEncoding.EncodeToString([]byte("Salted__" + string(salt) + string(encrypted)))
+	return b64.StdEncoding.EncodeToString([]byte("Salted__" + string(salt) + string(encrypted))), nil
 }
 
 // Decrypts encrypted text with the passphrase
-func Decrypt(encrypted string, passphrase string) (string) {
+func Decrypt(encrypted string, passphrase string) (string, error) {
 	ct, _ := b64.StdEncoding.DecodeString(encrypted)
 	if len(ct) < 16 || string(ct[:8]) != "Salted__" {
-		return ""
+		return "", nil
 	}
 
 	salt := ct[8:16]
@@ -50,14 +50,14 @@ func Decrypt(encrypted string, passphrase string) (string) {
 
 	block, err := aes.NewCipher([]byte(key))
 	if err != nil {
-		panic(err)
+		return "", err
 	}
 
 	cbc := cipher.NewCBCDecrypter(block, []byte(iv))
 	dst := make([]byte, len(ct))
 	cbc.CryptBlocks(dst, ct)
 
-	return string(__PKCS5Trimming(dst))
+	return string(__PKCS5Trimming(dst)), nil
 }
 
 func __PKCS5Padding(ciphertext []byte, blockSize int) []byte {
